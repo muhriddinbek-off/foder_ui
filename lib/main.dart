@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foder_ui/ui/home/home_screen.dart';
+import 'package:foder_ui/bloc/category/category_bloc.dart';
+import 'package:foder_ui/bloc/navigate/navigate_page_bloc.dart';
+import 'package:foder_ui/ui/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => NavigatePageBloc()),
+      BlocProvider(create: (context) => CategoryBloc()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      initialRoute: RouteNames.navigateScreen,
+      onGenerateRoute: AppRoutes.generatedRoute,
     );
   }
 }
